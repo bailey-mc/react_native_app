@@ -34,14 +34,18 @@ const App = () => {
 
           }}
         />
-      <Text style={styles.reminderLabel}>Reminders</Text>
+      <Text>Reminders</Text>
+      {/* <View style={styles.reminders}></View> */}
         {reminders.map((reminder)=> {
           return(
-            <View>
+            <View
+            style={styles.reminders}
+            key={reminder.id}
+
+            >
               <BouncyCheckbox 
                 size={25}
-
-                key={reminder.id}
+                
                 onPress={(isChecked: boolean) => {}} 
                 text = {reminder.name}
               />
@@ -50,6 +54,7 @@ const App = () => {
         })
 
         }
+        
     </View>
   )
 }
@@ -212,8 +217,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
     borderRadius: 4,
   },
-  reminderLabel:{
-    textDecorationStyle: 'underline',
+  reminders: {
+    // flex: 2,
+    // // textAlign: 'left',
+    // justifyContent: 'flex-start'
+    margin: 5,
+    alignSelf: 'left',
+    marginLeft: 20,
   }
 });
 
