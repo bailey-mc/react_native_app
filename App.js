@@ -3,35 +3,20 @@ import React, {useState} from 'react'
 import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
 import {useForm, Controller} from 'react-hook-form'
 import DateTimePicker from '@react-native-community/datetimepicker';
+// import CheckBox from '@react-native-community/checkbox';
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 const App = () => {
   // const [create, setCreate] = useState(false)
   // const [showReminders, setShowReminders] = useState(false)
   const [remind, onChangeRemind] = React.useState('')
   const [reminders, setReminders] = useState([{}])
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(1)
+  // const [toggleCheckBox, setToggleCheckBox] = useState(false)
+
 
   return (
     <View style={styles.container}>
-     
-      {/* //form to show new reminder */}
-      {/* {create ? 
-        <NewForm reminders={reminders} setReminders={setReminders}/>
-      :
-      <Button 
-        title="Create new reminder?"
-        onPress={()=> setCreate(true)}
-      />
-      } */}
-      {/* {showReminders ?
-        <RemindersList reminders={reminders}/>
-      :
-        <Button
-          title="Show reminders?"
-          onPress={()=> setShowReminders(true)}
-        />
-      } */}
-      <Text style={styles.reminderLabel}>Reminders</Text>
       <TextInput
         value={remind}
         style={styles.input}
@@ -49,10 +34,17 @@ const App = () => {
 
           }}
         />
+      <Text style={styles.reminderLabel}>Reminders</Text>
         {reminders.map((reminder)=> {
           return(
             <View>
-              <Text>{reminder.name} reminder + id {reminder.id}</Text>
+              <BouncyCheckbox 
+                size={25}
+
+                key={reminder.id}
+                onPress={(isChecked: boolean) => {}} 
+                text = {reminder.name}
+              />
             </View>
           )
         })
@@ -68,13 +60,7 @@ const defaultValues = {
   DateTimePicker: new Date(),
 }
 
-const RemindersList = () => {
-  return(
-    <View style={styles.container}>
-      <Text>Reminders List</Text>
-    </View>
-  )
-}
+
 
 
 const NewForm = (props) => {
@@ -208,9 +194,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
    input: {
-    backgroundColor: 'white',
-    borderColor: 'none',
+    backgroundColor: '#D3D3D3',
     height: 40,
+    width: 200,
     padding: 10,
     borderRadius: 4,
   },
