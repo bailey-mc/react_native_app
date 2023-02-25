@@ -72,7 +72,7 @@ const App = () => {
 
           }}
         />
-      <Text>Reminders</Text>
+      <Text style={styles.reminderLabel}>Reminders</Text>
         {reminders.map((reminder)=> {
           return(
             <>
@@ -83,7 +83,7 @@ const App = () => {
               <BouncyCheckbox 
                 size={25}
                 onPress={(isChecked: boolean) => {}} 
-                text = {reminder.name} 
+                text= {reminder.name} 
               />
               <Text>at {reminder.time}</Text>
             </View>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 100,
   },
    input: {
     backgroundColor: '#D3D3D3',
@@ -120,9 +120,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 40,
-    color: 'white',
     height: 40,
-    backgroundColor: 'blue',
     borderRadius: 4,
   },
   reminders: {
@@ -132,7 +130,11 @@ const styles = StyleSheet.create({
     margin: 5,
     alignSelf: 'left',
     marginLeft: 20,
-  }
+  },
+  reminderLabel: {
+    fontSize: 25,
+    textDecorationLine: 'underline'
+  },
 });
 
 // export default LotsofNames;
