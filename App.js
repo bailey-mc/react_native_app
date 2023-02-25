@@ -45,6 +45,7 @@ const App = () => {
         value={remind}
         style={styles.input}
         onChangeText={onChangeRemind}
+        placeholder="Reminder to..."
         />
       
       <Button onPress={showDatepicker} title="Select Date" />
