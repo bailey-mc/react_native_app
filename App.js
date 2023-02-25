@@ -7,76 +7,10 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 const App = () => {
-  // const [create, setCreate] = useState(false)
-  // const [showReminders, setShowReminders] = useState(false)
-  const [remind, onChangeRemind] = React.useState('')
+  const [remind, onChangeRemind] = React.useState()
   const [reminders, setReminders] = useState([{}])
   const [count, setCount] = useState(1)
-  // const [toggleCheckBox, setToggleCheckBox] = useState(false)
-
-
-  return (
-    <View style={styles.container}>
-      <TextInput
-        value={remind}
-        style={styles.input}
-        onChangeText={onChangeRemind}
-        />
-        <Button
-          title="Add Reminder"
-          onPress={()=>{
-            setReminders([
-              ...reminders,
-              {id: count, name: remind}
-            ]);
-            onChangeRemind('');
-            setCount(count + 1);
-
-          }}
-        />
-      <Text>Reminders</Text>
-      {/* <View style={styles.reminders}></View> */}
-        {reminders.map((reminder)=> {
-          return(
-            <View
-            style={styles.reminders}
-            key={reminder.id}
-
-            >
-              <BouncyCheckbox 
-                size={25}
-                
-                onPress={(isChecked: boolean) => {}} 
-                text = {reminder.name}
-              />
-            </View>
-          )
-        })
-
-        }
-        
-    </View>
-  )
-}
-
-//default values for react hooks form
-const defaultValues = {
-  TextInput: 'reminder to...',
-  DateTimePicker: new Date(),
-}
-
-
-
-
-const NewForm = (props) => {
-  //react hook form
-   const { register, setValue, handleSubmit, control, reset, formState: { errors } } = useForm(defaultValues);
-  const onSubmit = data => {
-    console.log(data);
-    props.setReminders(data)
-  };
-
-  //date time picker
+    //date time picker
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -103,6 +37,103 @@ const NewForm = (props) => {
   const showTimepicker = () => {
     showMode('time');
   };
+  //to convert date/time to string for reminder
+  let time = date.toLocaleString()
+  return (
+    <View style={styles.container}>
+      <TextInput
+        value={remind}
+        style={styles.input}
+        onChangeText={onChangeRemind}
+        />
+      
+      <Button onPress={showDatepicker} title="Select Date" />
+      <Button onPress={showTimepicker} title="Select Time" />
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          onChange={onChange}
+        />
+        )}     
+      <Text>selected: {date.toLocaleString()}</Text>
+        <Button
+          title="Add Reminder"
+          onPress={()=>{
+            setReminders([
+              ...reminders,
+              {id: count, name: remind, time: time}
+            ]);
+            onChangeRemind('');
+            setCount(count + 1);
+
+          }}
+        />
+      <Text>Reminders</Text>
+      {/* <View style={styles.reminders}></View> */}
+        {reminders.map((reminder)=> {
+          return(
+            <View
+            style={styles.reminders}
+            key={reminder.id}
+
+            >
+              <BouncyCheckbox 
+                size={25}
+                
+                onPress={(isChecked: boolean) => {}} 
+                text = {reminder.name} 
+              />
+              <Text>at {reminder.time}</Text>
+            </View>
+          )
+        })
+
+        }
+        
+    </View>
+  )
+}
+
+
+
+const NewForm = (props) => {
+  //react hook form
+   const { register, setValue, handleSubmit, control, reset, formState: { errors } } = useForm(defaultValues);
+  const onSubmit = data => {
+    console.log(data);
+    props.setReminders(data)
+  };
+
+  // //date time picker
+  // const [date, setDate] = useState(new Date());
+  // const [mode, setMode] = useState('date');
+  // const [show, setShow] = useState(false);
+
+  // const onChange = (event, selectedDate) => {
+  //   const currentDate = selectedDate;
+  //   // setShow(false);
+  //   setDate(currentDate);
+  // };
+
+  // const showMode = (currentMode) => {
+  //   if (Platform.OS === 'android') {
+  //     setShow(false);
+  //     // for iOS, add a button that closes the picker
+  //   }
+  //   setShow(true);
+  //   setMode(currentMode);
+  // };
+
+  // const showDatepicker = () => {
+  //   showMode('date');
+  // };
+
+  // const showTimepicker = () => {
+  //   showMode('time');
+  // };
    
   // const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
   //   return console.log(errors)
