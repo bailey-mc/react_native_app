@@ -1,9 +1,6 @@
-// import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react'
 import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
-import {useForm, Controller} from 'react-hook-form'
 import DateTimePicker from '@react-native-community/datetimepicker';
-// import CheckBox from '@react-native-community/checkbox';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 const App = () => {
@@ -39,14 +36,16 @@ const App = () => {
   };
   //to convert date/time to string for reminder
   let time = date.toLocaleString()
+
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Diaryz</Text>
       <TextInput
         value={remind}
         style={styles.input}
         onChangeText={onChangeRemind}
         placeholder="Reminder to..."
-        />
+      />
       
       <Button onPress={showDatepicker} title="Select Date" />
       <Button onPress={showTimepicker} title="Select Time" />
@@ -58,41 +57,43 @@ const App = () => {
           is24Hour={true}
           onChange={onChange}
         />
-        )}     
+      )}     
       <Text>selected: {date.toLocaleString()}</Text>
-        <Button
-          title="Add Reminder"
-          onPress={()=>{
-            setReminders([
-              ...reminders,
-              {id: count, name: remind, time: time}
-            ]);
-            onChangeRemind('');
-            setCount(count + 1);
-
-          }}
-        />
+      <Button
+        title="Add Reminder"
+        onPress={()=>{
+          setReminders([
+            ...reminders,
+            {id: count, name: remind, time: time}
+          ]);
+          onChangeRemind('');
+          setCount(count + 1);
+        }}
+      />
       <Text style={styles.reminderLabel}>Reminders</Text>
-        {reminders.map((reminder)=> {
-          return(
-            <>
-            <View
-            style={styles.reminders}
-            key={reminder.id}
-            >
-              <BouncyCheckbox 
-                size={25}
-                onPress={(isChecked: boolean) => {}} 
-                text= {reminder.name} 
-              />
-              <Text>at {reminder.time}</Text>
-            </View>
-            </>
-          )
-        })
-
-        }
-        
+      {reminders.length < 1 ?
+        <Text> You have no reminders at this time.</Text>
+      :
+        <>
+          {reminders.map((reminder)=> {
+            return(
+              <>
+                <View
+                style={styles.reminders}
+                key={reminder.id}
+                >
+                  <BouncyCheckbox 
+                    size={25}
+                    onPress={(isChecked: boolean) => {}} 
+                    text= {reminder.name} 
+                  />
+                  <Text>at {reminder.time}</Text>
+                </View>
+              </>
+            )
+          })}
+        </>
+      }
     </View>
   )
 }
@@ -124,16 +125,17 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   reminders: {
-    // flex: 2,
-    // // textAlign: 'left',
-    // justifyContent: 'flex-start'
-    margin: 5,
     alignSelf: 'left',
     marginLeft: 20,
   },
   reminderLabel: {
     fontSize: 25,
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
+    marginBottom: 10,
+  },
+  title: {
+    fontSize: 30,
+    marginBottom: 20,
   },
 });
 
